@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cançó</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #000;
+            color: #00e676;
+            text-align: center;
+        }
+
+        form {
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo transparente */
+            border-radius: 15px;
+            width: 60%;
+            color: #fff;
+        }
+
+        input[type="text"], input[type="file"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #00e676;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #00e676;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00b350;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #00e676;
+        }
+
+        h1 {
+            color: #00e676;
+            margin-bottom: 30px;
+            font-size: 3em;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .tornar-button {
+            background-color: #00e676;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .tornar-button:hover {
+            background-color: #00b350;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Enlace a la página principal -->
+    <a href="stepmania.php" class="home-icon" title="Ir a la página principal">
+        <img src="menu.png" alt="inici" style="position: fixed; top: 20px; left: 20px; width: 50px;">
+    </a>
+
+    <!-- Título de la página -->
+    <h1>Editar Cançó</h1>
+
+    <!-- Formulario de edición -->
+    <form id="songForm" enctype="multipart/form-data" onsubmit="return validateForm(event)">
+        <label for="title">Títol de la cançó:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="artist">Nom de l'artista:</label>
+        <input type="text" id="artist" name="artist" required>
+
+        <label for="audioFile">Arxiu de música (MP3):</label>
+        <input type="file" id="audioFile" name="audioFile" accept=".mp3">
+
+        <label for="coverFile">Arxiu de caràtula (Imatge):</label>
+        <input type="file" id="coverFile" name="coverFile" accept="image/*">
+
+        <label for="gameFile">Arxiu de joc (TXT) o crea'l manualment:</label>
+        <input type="file" id="gameFile" name="gameFile" accept=".txt">
+        
+        <label for="gameText">Crea el joc aquí (textarea):</label>
+        <textarea id="gameText" name="gameText" rows="5"></textarea>
+
+        <input type="submit" value="Guardar Canvis">
+    </form>
+
+    <!-- Script para manejar la lógica del formulario -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Simulación de datos precarregados
+            const songData = {
+                title: "Títol Precarregat",
+                artist: "Artista Precarregat",
+                gameText: "0.0,3.5\n4.0,6.0"
+            };
+
+            // Llena los campos con los datos existentes
+            document.getElementById('title').value = songData.title;
+            document.getElementById('artist').value = songData.artist;
+            document.getElementById('gameText').value = songData.gameText;
+        });
+
+        function validateForm(event) {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const artist = document.getElementById('artist').value;
+            const audioFile = document.getElementById('audioFile').files[0];
+            const coverFile = document.getElementById('coverFile').files[0];
+            const gameFile = document.getElementById('gameFile').files[0];
+            const gameText = document.getElementById('gameText').value.trim();
+
+            if (!title || !artist) {
+                alert("Tots els camps obligatoris han d'estar omplerts!");
+                return false;
+            }
+
+            if (gameFile && gameText) {
+                alert("Només pots pujar un fitxer de joc o escriure el joc al textarea, no les dues coses.");
+                return false;
+            }
+
+            if (gameFile && gameFile.type !== "text/plain") {
+                alert("L'arxiu de joc ha de ser un fitxer TXT.");
+                return false;
+            }
+
+            if (gameText) {
+                if (!validateGameText(gameText)) {
+                    alert("El format del joc al textarea no és correcte.");
+                    return false;
+                }
+            }
+
+            alert("El formulari és vàlid! S'envien els canvis.");
+        }
+
+        function validateGameText(gameText) {
+            const lines = gameText.split('\n');
+            for (let line of lines) {
+                const parts = line.split(',');
+                if (parts.length !== 2) {
+                    return false;
+                }
+
+                const instantInicial = parseFloat(parts[0].trim());
+                const instantFinal = parseFloat(parts[1].trim());
+
+                if (isNaN(instantInicial) || isNaN(instantFinal) || instantInicial < 0 || instantFinal < 0 || instantInicial >= instantFinal) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+    <!-- Sección para mostrar el vídeo de fondo -->
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+        </video> 
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Botón "Tornar" centrado al final de la página -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="tornar-button" onclick="window.history.back()">Tornar</button>
+    </div>
+
+</body>
+</html>

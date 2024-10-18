@@ -1,0 +1,1296 @@
+/* Asegurar que la página ocupa toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Contenedor del video en segundo plano */
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Mantener el video detrás del contenido */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Capa oscura sobre el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    z-index: 1; /* Asegura que esté sobre el video pero debajo del contenido */
+}
+
+/* Contenido centrado vertical y horizontalmente */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2; /* Asegura que el contenido esté encima del overlay */
+}
+
+/* Estilo del título */
+.title {
+    font-size: 6em; /* Título grande */
+    color: #00e676; /* Verde neón llamativo */
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7); /* Sombra oscura para que resalte */
+    margin-bottom: 50px;
+}
+
+/* Menú de navegación */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    margin-bottom: 20px; /* Espacio entre botones */
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 22px; /* Tamaño de fuente un poco más grande */
+    color: #fff; /* Texto blanco */
+    display: block;
+    padding: 15px 30px;
+    background-color: #ff5722; /* Naranja vibrante */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Sombra para dar efecto 3D */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu ul li a:hover {
+    background-color: #ff4081; /* Rosa fuerte al pasar el ratón */
+    transform: scale(1.05); /* Efecto zoom en hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Más sombra al pasar el ratón */
+}
+
+/* Adaptabilidad para dispositivos móviles */
+@media (max-width: 768px) {
+    .title {
+        font-size: 3em; /* Ajustar tamaño del título para pantallas pequeñas */
+    }
+
+    .menu ul li a {
+        font-size: 1.2em;
+        padding: 12px 25px;
+    }
+}
+/* Asegurar que la página ocupa toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Contenedor del video en segundo plano */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Mantener el video detrás del contenido */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video ocupe todo el espacio */
+}
+
+/* Capa oscura sobre el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    z-index: 1; /* Asegura que esté sobre el video pero debajo del contenido */
+}
+
+/* Sección del contenido centrado */
+section {
+    position: relative;
+    z-index: 2; /* Asegurar que esté encima del overlay */
+    text-align: center;
+    color: white;
+    padding: 20px;
+    margin-top: 100px; /* Espacio para no quedar pegado al borde superior */
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #00e676; /* Color llamativo */
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7); /* Sombra para que resalte */
+}
+
+/* Adaptabilidad para móviles */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2em; /* Ajustar tamaño del texto para pantallas pequeñas */
+    }
+
+    section {
+        padding: 10px;
+        margin-top: 50px; /* Reducir margen en pantallas más pequeñas */
+    }
+}
+
+        /* Asegurar que la página ocupa toda la pantalla */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Contenedor del video en segundo plano */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Mantener el video detrás del contenido */
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Asegura que el video ocupe todo el espacio */
+        }
+
+        /* Capa oscura sobre el video */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+            z-index: 1; /* Asegura que esté sobre el video pero debajo del contenido */
+        }
+
+        /* Sección del contenido centrado */
+        section {
+            position: relative;
+            z-index: 2; /* Asegurar que esté encima del overlay */
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 100px; /* Espacio para no quedar pegado al borde superior */
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            color: #00e676; /* Color verde llamativo */
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7); /* Sombra para que resalte */
+        }
+
+        /* Adaptabilidad para móviles */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2em; /* Ajustar tamaño del texto para pantallas pequeñas */
+            }
+
+            section {
+                padding: 10px;
+                margin-top: 50px; /* Reducir margen en pantallas más pequeñas */
+            }
+        }
+        
+        /* Asegurar que la página ocupa toda la pantalla */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Contenedor del video en segundo plano */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Mantener el video detrás del contenido */
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Asegura que el video ocupe todo el espacio */
+        }
+
+        /* Capa oscura sobre el video */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+            z-index: 1; /* Asegura que esté sobre el video pero debajo del contenido */
+        }
+
+        /* Sección del contenido centrado */
+        section {
+            position: relative;
+            z-index: 2; /* Asegurar que esté encima del overlay */
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 100px; /* Espacio para no quedar pegado al borde superior */
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            color: #00e676; /* Color verde llamativo */
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7); /* Sombra para que resalte */
+        }
+
+        /* Adaptabilidad para móviles */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2em; /* Ajustar tamaño del texto para pantallas pequeñas */
+            }
+
+            section {
+                padding: 10px;
+                margin-top: 50px; /* Reducir margen en pantallas más pequeñas */
+            }
+        }
+        body {
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .home-icon {
+            position: absolute;  /* Ubica el ícono en la esquina superior izquierda */
+            top: 20px;          /* Distancia desde la parte superior */
+            left: 20px;         /* Distancia desde la izquierda */
+            font-size: 24px;    /* Tamaño del ícono */
+            text-decoration: none; 
+            color: #ff5733;      /* Color del ícono */
+            transition: transform 0.2s, color 0.2s; /* Animaciones */
+        }
+        
+        .home-icon:hover {
+            transform: scale(1.1);  /* Escalado al pasar el mouse */
+            color: #c70039;          /* Color al pasar el mouse */
+        }
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+        }
+        /* Asegurar que la página ocupa toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear el contenido en la parte superior */
+    align-items: center;
+}
+
+/* Estilo para el ícono de inicio */
+.home-icon {
+    position: absolute;  
+    top: 20px;
+    left: 20px;
+    text-decoration: none; 
+    font-size: 24px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.home-icon img {
+    width: 50px;  /* Ajusta el tamaño del icono de inicio si es necesario */
+}
+
+.home-icon:hover {
+    transform: scale(1.1);  /* Animación al pasar el ratón */
+}
+
+/* Botones centrados en la página */
+.buttons {
+    margin-top: 250px; /* Incrementar el margen superior para bajar los botones */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.button {
+    text-decoration: none;
+    font-size: 22px;
+    color: #fff;
+    padding: 15px 30px;
+    background-color: #ff5722;
+    border-radius: 10px;
+    margin-bottom: 20px; /* Espacio entre los botones */
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Contenedor del video de fondo */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Mantener el video detrás del contenido */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Capa oscura sobre el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+}
+
+
+section {
+    position: absolute;
+    top: 50px; 
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #00e676;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7);
+}
+
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2em;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .buttons {
+        margin-top: 200px; 
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+
+.home-icon {
+    position: absolute;  
+    top: 20px;
+    left: 20px;
+    text-decoration: none; 
+    font-size: 24px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.home-icon img {
+    width: 50px;  
+}
+
+.home-icon:hover {
+    transform: scale(1.1);  
+}
+
+
+.buttons {
+    margin-top: 250px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.button {
+    text-decoration: none;
+    font-size: 22px;
+    color: #fff;
+    padding: 15px 30px;
+    background-color: #ff5722;
+    border-radius: 10px;
+    margin-bottom: 20px; 
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; 
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+}
+
+
+section {
+    position: absolute;
+    top: 50px;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #00e676;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2em;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .buttons {
+        margin-top: 200px; 
+    }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+
+.home-icon {
+    position: absolute;  
+    top: 20px;
+    left: 20px;
+    text-decoration: none; 
+    font-size: 24px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.home-icon img {
+    width: 50px; 
+}
+
+.home-icon:hover {
+    transform: scale(1.1);  
+}
+
+
+.buttons {
+    margin-top: 350px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.button {
+    text-decoration: none;
+    font-size: 22px;
+    color: #fff;
+    padding: 15px 30px;
+    background-color: #ff5722;
+    border-radius: 10px;
+    margin-bottom: 20px; 
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; 
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+}
+
+
+section {
+    position: absolute;
+    top: 50px; 
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #00e676;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7);
+}
+
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2em;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .buttons {
+        margin-top: 300px; 
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0; 
+}
+
+h1 {
+    text-align: center;
+    color: #32CD32; 
+    font-size: 48px; 
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
+    margin-bottom: 20px;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    color: #32CD32; 
+    font-size: 18px; 
+}
+
+input[type="text"], input[type="file"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #32CD32; 
+    border-radius: 4px;
+    background-color: #f0fff0; 
+    color: #333; 
+    font-size: 16px; 
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #32CD32; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; 
+}
+
+
+.alert {
+    color: red;
+    font-weight: bold;
+}}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input[type="text"], input[type="file"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    
+body {
+    color: #00FF00; 
+}
+
+ 
+h1, h2, p, label, a {
+    color: #00FF00; 
+}
+/* Estilo para el botón "Tornar" */
+.tornar-button {
+    background-color: green; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
+}
+
+.tornar-button:hover {
+    background-color: darkgreen; 
+}
+/* Asegurar que la página ocupa toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Contenedor del video en segundo plano */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Mantener el video detrás del contenido */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video ocupe todo el espacio */
+}
+
+/* Capa oscura sobre el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    z-index: 1; /* Asegura que esté sobre el video pero debajo del contenido */
+}
+
+/* Contenido centrado vertical y horizontalmente */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2; /* Asegura que el contenido esté encima del overlay */
+}
+
+/* Estilo del título */
+.title {
+    font-size: 6em; /* Título grande */
+    color: #00e676; /* Verde neón llamativo */
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7); /* Sombra oscura para que resalte */
+    margin-bottom: 50px;
+}
+
+/* Menú de navegación */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    margin-bottom: 20px; /* Espacio entre botones */
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 22px; /* Tamaño de fuente un poco más grande */
+    color: #fff; /* Texto blanco */
+    display: block;
+    padding: 15px 30px;
+    background-color: #ff5722; /* Naranja vibrante */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Sombra para dar efecto 3D */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu ul li a:hover {
+    background-color: #ff4081; /* Rosa fuerte al pasar el ratón */
+    transform: scale(1.05); /* Efecto zoom en hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Más sombra al pasar el ratón */
+}
+
+/* Adaptabilidad para dispositivos móviles */
+@media (max-width: 768px) {
+    .title {
+        font-size: 3em; /* Ajustar tamaño del título para pantallas pequeñas */
+    }
+
+    .menu ul li a {
+        font-size: 1.2em;
+        padding: 12px 25px;
+    }
+}
+
+/* Estilo para el botón "Tornar" */
+.tornar-button {
+    background-color: green; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
+}
+
+.tornar-button:hover {
+    background-color: darkgreen; 
+}
+
+/* Contenedor del video de fondo */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Mantener el video detrás del contenido */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Capa oscura sobre el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+}
+
+/* Sección del contenido centrado */
+section {
+    position: absolute;
+    top: 50px; 
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #00e676; /* Verde neón llamativo */
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.7); /* Sombra para que resalte */
+}
+
+/* Adaptabilidad para móviles */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2em;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .buttons {
+        margin-top: 200px; 
+    }
+}
+
+/* Ajustar la posición del título para que esté más arriba */
+h1 {
+    text-align: center;
+    margin-top: 20px; /* Reducir el margen superior */
+    color: #00e676; /* Verde neón */
+    font-size: 3em;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Botón "Tornar" */
+.tornar-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.tornar-button:hover {
+    background-color: darkgreen;
+}
+
+/* Ajustar el formulario */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 1.2em;
+}
+
+input[type="text"], input[type="file"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #00e676;
+    border-radius: 4px;
+    background-color: #f0fff0;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #00e676;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Video de fondo y overlay */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+/* Estilo para el título */
+#partida {
+    margin-top: 50px; /* Ajusta la posición del título en la parte superior */
+    text-align: center;
+}
+
+#partida h2 {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ff00; /* Color verde brillante como en el ejemplo */
+    font-size: 48px; /* Tamaño grande para el título */
+    margin-bottom: 50px; /* Espacio entre el título y los botones */
+}
+
+/* Para los botones */
+.buttons {
+    display: flex;
+    flex-direction: column; /* Apila los botones verticalmente */
+    align-items: center; /* Centra los botones */
+    gap: 20px; /* Espacio entre los botones */
+    margin-top: 20px;
+}
+
+/* Estilo individual para los botones */
+.buttons .button {
+    padding: 15px 50px; /* Tamaño más grande para el botón */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px; /* Tamaño de texto más grande */
+    background-color: #FF5733; /* Color rojo-naranja para los botones */
+    color: white; /* Texto en blanco */
+    text-decoration: none;
+    border-radius: 20px; /* Bordes más redondeados */
+    display: block;
+    text-align: center;
+    width: 300px; /* Ancho mayor de los botones */
+}
+
+.buttons .button:hover {
+    background-color: #C70039; /* Color más oscuro en hover */
+    transition: background-color 0.3s ease; /* Suave transición al pasar el ratón */
+}
+
+/* Para asegurar que el video de fondo no interfiera */
+.video-container {
+    position: relative;
+    z-index: -1;
+}
+
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo para mayor legibilidad */
+    z-index: -1;
+}
+/* Título */
+.title {
+    font-size: 4.5em;
+    color: #00e676;
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 50px; /* Ajustamos más el título hacia arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    white-space: nowrap;
+    pointer-events: none; /* El título no bloquea clics */
+}
+
+/* Botones */
+.buttons {
+    margin-top: 400px; /* Aumentamos el margen superior para dar más espacio */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 2;
+}
+
+.button {
+    background-color: #FF5733;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1.5em;
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Video de fondo */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+/* Título principal */
+.title {
+    font-size: 5em;
+    color: #00e676;
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 50px; /* Mueve el título hacia arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    white-space: nowrap;
+    pointer-events: none; /* No bloquear la interacción con los botones */
+}
+
+/* Botones */
+.buttons {
+    margin-top: 250px; /* Se asegura que haya espacio debajo del título */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; /* Espaciado entre los botones */
+    z-index: 2;
+}
+
+.button {
+    background-color: #FF5733;
+    color: white;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-size: 1.8em;
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Fondo del video */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Estilos para la página */
+body {
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: white;
+    background-color: #000;
+}
+
+/* Contenedor del video */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Capa de superposición para oscurecer el video */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Oscurece ligeramente el video */
+    z-index: 1;
+}
+
+/* Contenedor del contenido centrado */
+.content {
+    position: relative;
+    z-index: 2;
+    top: 20%;
+    /* Ajusta la altura */
+}
+
+/* Estilos del título */
+.title {
+    font-size: 5em;
+    color: #00e676;
+    text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7);
+    margin-bottom: 50px;
+}
+
+/* Menú de navegación */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    margin: 20px 0;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #fff;
+    padding: 15px 30px;
+    background-color: #FF5733;
+    border-radius: 10px;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu ul li a:hover {
+    background-color: #ff4081;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Cançons</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Enlace a la página principal -->
+    <a href="stepmania.php" class="home-icon" title="Ir a la página principal">
+        <img src="menu.png" alt="inici">
+    </a>
+
+    <!-- Título de la página -->
+    <h1>Gestió de Cançons</h1>
+
+    <!-- Contenedor para mostrar la lista de canciones con opción de eliminar -->
+    <div id="song-list"></div>
+
+    <script>
+        // Función para cargar las canciones y mostrar los botones de eliminar
+        function loadSongs() {
+            fetch('cançons.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al carregar el fitxer JSON');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const songList = document.getElementById('song-list');
+                    songList.innerHTML = ''; // Limpiar el contenedor
+
+                    if (data.length === 0) {
+                        songList.innerHTML = '<p>No hi ha cançons disponibles.</p>';
+                    } else {
+                        data.forEach((song, index) => {
+                            const songItem = document.createElement('div');
+                            songItem.classList.add('song-item');
+                            songItem.innerHTML = `
+                                <h2>${song.title}</h2>
+                                <p>Artista: ${song.artist}</p>
+                                <button onclick="deleteSong('${song.title}')">Eliminar Cançó</button>
+                            `;
+                            songList.appendChild(songItem);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al carregar les cançons:', error);
+                    document.getElementById('song-list').innerHTML = '<p>Error al carregar les cançons.</p>';
+                });
+        }
+
+        // Función para eliminar una canción con confirmación
+        function deleteSong(songTitle) {
+            const confirmation = confirm("Estàs segur que vols eliminar aquesta cançó?");
+            
+            if (confirmation) {
+                // Envía la solicitud para eliminar la canción al servidor
+                fetch('eliminar_canso.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `deleteSong=${encodeURIComponent(songTitle)}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Cançó eliminada correctament!');
+                        loadSongs(); // Volver a cargar la lista de canciones
+                    } else {
+                        alert('Error al eliminar la cançó.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar la cançó:', error);
+                });
+            } else {
+                alert('Eliminació cancel·lada.');
+            }
+        }
+
+        // Llamar a la función para cargar las canciones cuando se carga la página
+        window.onload = loadSongs;
+    </script>
+
+    <!-- Video de fondo -->
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+        </video> 
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Botón de regreso -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="tornar-button" onclick="window.history.back()">Tornar</button>
+    </div>
+
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #00e676; /* Color verde */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        #song-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .song-item {
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .song-item h2 {
+            font-size: 1.5em;
+            color: #00e676; /* Color verde */
+        }
+
+        .song-item p {
+            font-size: 1.2em;
+            color: #ff4081;
+        }
+
+        .song-item button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .song-item button:hover {
+            background-color: darkred;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        #background-video {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .tornar-button {
+            background-color: #00e676; /* Color verde */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tornar-button:hover {
+            background-color: darkgreen; /* Oscurecer en hover */
+        }
+    </style>
+
+</body>
+</html>

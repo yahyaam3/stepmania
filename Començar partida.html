@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StepMania Clone</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: row;  
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            width: 100%;
+        }
+
+        .fixed-arrows {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 20px;
+        }
+
+        .fixed-arrows span {
+            font-size: 60px;
+            color: gray;
+        }
+
+        .moving-arrows-container {
+            position: relative;
+            height: 600px;  
+            width: 400px;   
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: rgba(50, 50, 50, 0.8);
+        }
+
+        .moving-arrow {
+            position: absolute;
+            font-size: 50px;  
+            color: red;
+        }
+
+        .score-container {
+            position: absolute; 
+            top: 80px; 
+            left: 20px; 
+            font-size: 20px;
+            text-align: left; 
+            z-index: 3; 
+            color: #ffcc00; 
+        }
+
+        .audio-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .audio-container select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .song-details {
+            margin-top: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .song-details img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .song-details p {
+            font-size: 16px;
+            color: #4CAF50;
+        }
+
+        .right-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-left: 50px;  
+        }
+
+        .tornar-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .tornar-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Barra de reproducción */
+        .barra-reproduccion {
+            position: fixed;
+            left: 20px;
+            bottom: 80px;
+            width: 200px;
+            height: 10px;
+            background-color: #555;
+        }
+
+        .barra-reproduccion-progreso {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video> 
+        <div class="overlay"></div>
+    </div>
+
+    <div class="game-container">
+        <div class="moving-arrows-container" id="moving-arrows-container"></div>
+
+        <div class="right-container">
+            <div class="audio-container">
+                <select id="song-select">
+                    <option value="">Selecciona una canción</option>
+                </select>
+                <br><br>
+                <audio id="game-audio" controls>
+                    <source id="audio-source" src="" type="audio/mp3">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
+
+            <div class="song-details" id="song-details"></div>
+        </div>
+    </div>
+
+    <h1>StepMania</h1>
+
+    <div class="score-container">
+        <span>Puntuación: <span id="score">0</span></span>
+        <br>
+        <span>Tiempo: <span id="time">60</span> segundos</span>
+    </div>
+
+    <div class="barra-reproduccion">
+        <div class="barra-reproduccion-progreso" id="barra-progreso"></div>
+    </div>
+
+    <button class="tornar-button" onclick="window.location.href='stepmania.php'">Tornar</button>
+
+    <script>
+        const arrowSymbols = ['←', '↑', '↓', '→'];
+        let score = 0;
+        let timeRemaining = 60;
+        let intervalId;
+        let gameTimer;
+
+        const container = document.getElementById('moving-arrows-container');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const audioElement = document.getElementById('game-audio');
+        const audioSource = document.getElementById('audio-source');
+        const songSelect = document.getElementById('song-select');
+        const songDetails = document.getElementById('song-details');
+        const barraProgreso = document.getElementById('barra-progreso');
+
+        function cargarCanciones() {
+            fetch('cançons.json')
+                .then(response => response.json())
+                .then(canciones => {
+                    canciones.forEach(cancion => {
+                        const option = document.createElement('option');
+                        option.value = cancion.audio;
+                        option.textContent = `${cancion.title} - ${cancion.artist}`;
+                        songSelect.appendChild(option);
+                    });
+                    mostrarDetallesCancion(canciones[0]);
+                })
+                .catch(error => console.error('Error al cargar las canciones:', error));
+        }
+
+        function mostrarDetallesCancion(cancion) {
+            songDetails.innerHTML = `
+                <p><strong>${cancion.title}</strong></p>
+                <p>Artista: ${cancion.artist}</p>
+                <img src="${cancion.cover}" alt="Carátula de ${cancion.title}">
+            `;
+        }
+
+        songSelect.addEventListener('change', function() {
+            const selectedIndex = songSelect.selectedIndex - 1;
+            if (selectedIndex >= 0) {
+                fetch('cançons.json')
+                    .then(response => response.json())
+                    .then(canciones => {
+                        const cancionSeleccionada = canciones[selectedIndex];
+                        audioSource.src = cancionSeleccionada.audio;
+                        audioElement.load();
+                        mostrarDetallesCancion(cancionSeleccionada);
+                    });
+            }
+        });
+
+        audioElement.onplay = function() {
+            startGame();
+            startTimer();
+        };
+
+        function startGame() {
+            intervalId = setInterval(() => {
+                const arrow = document.createElement('span');
+                arrow.textContent = arrowSymbols[Math.floor(Math.random() * arrowSymbols.length)];
+                arrow.classList.add('moving-arrow');
+                arrow.style.left = `${Math.floor(Math.random() * 4) * 100}px`;
+                arrow.style.top = '600px';
+                container.appendChild(arrow);
+                moveArrow(arrow);
+            }, 1000);
+
+            document.addEventListener('keydown', handleKeyPress);
+        }
+
+        function handleKeyPress(event) {
+            const keyPressed = event.key;
+            const validKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+            if (validKeys.includes(keyPressed)) {
+                const arrows = document.querySelectorAll('.moving-arrow');
+                if (arrows.length > 0) {
+                    const firstArrow = arrows[0];
+                    const expectedKey = getArrowFromSymbol(firstArrow.textContent);
+
+                    if (expectedKey === keyPressed) {
+                        score += 100;
+                        firstArrow.remove();
+                    } else {
+                        score -= 50;
+                    }
+                    scoreElement.textContent = score;
+                }
+            }
+        }
+
+        function getArrowFromSymbol(symbol) {
+            switch (symbol) {
+                case '←':
+                    return 'ArrowLeft';
+                case '↑':
+                    return 'ArrowUp';
+                case '↓':
+                    return 'ArrowDown';
+                case '→':
+                    return 'ArrowRight';
+                default:
+                    return '';
+            }
+        }
+
+        function moveArrow(arrow) {
+            let position = 600;
+            const interval = setInterval(() => {
+                position -= 5;
+                arrow.style.top = `${position}px`;
+                if (position < -40) {
+                    clearInterval(interval);
+                    arrow.remove();
+                }
+            }, 20);
+        }
+
+        function startTimer() {
+            gameTimer = setInterval(() => {
+                timeRemaining--;
+                timeElement.textContent = timeRemaining;
+                updateProgressBar();
+                if (timeRemaining <= 0) {
+                    clearInterval(gameTimer);
+                    clearInterval(intervalId);
+                    audioElement.pause();
+                    showEndGameAlert();
+                    document.removeEventListener('keydown', handleKeyPress);
+                }
+            }, 1000);
+        }
+
+        function updateProgressBar() {
+            const currentTime = audioElement.currentTime;
+            const duration = audioElement.duration;
+            const progress = (currentTime / duration) * 100;
+            barraProgreso.style.width = `${progress}%`;
+        }
+
+        function showEndGameAlert() {
+            const playerName = prompt(`Fin del juego. Tu puntuación es ${score}. Introduce tu nombre:`);
+            if (playerName) {
+                guardarEstadisticas(playerName);
+            }
+            const restart = confirm('¿Quieres jugar de nuevo?');
+            if (restart) {
+                reiniciarJuego();
+            } else {
+                window.location.href = 'stepmania.php';
+            }
+        }
+
+        function guardarEstadisticas(playerName) {
+            const gameStats = {
+                playerName: playerName,
+                score: score,
+                date: new Date().toLocaleString()
+            };
+            let stats = JSON.parse(localStorage.getItem('gameStats')) || [];
+            stats.push(gameStats);
+            localStorage.setItem('gameStats', JSON.stringify(stats));
+        }
+
+        function reiniciarJuego() {
+            score = 0;
+            timeRemaining = 60;
+            scoreElement.textContent = score;
+            timeElement.textContent = timeRemaining;
+            startGame();
+            startTimer();
+        }
+
+        window.onload = cargarCanciones;
+    </script>
+</body>
+</html>

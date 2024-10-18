@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nova Cançó</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+            color: #009a29;
+        }
+
+        /* Home icon */
+        .home-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .home-icon img {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Form styles */
+        form {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #007517;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005f0b;
+        }
+
+        /* Video container */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Background video */
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Return button */
+        .tornar-button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .tornar-button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="stepmania.php" class="home-icon" title="Ir a la página principal">
+        <img src="menu.png" alt="inici">
+    </a>
+
+    <h1>Crear Nova Cançó</h1>
+
+    <form id="songForm" action="afegir.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm(event)">
+        <label for="title">Títol de la cançó:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="artist">Nom de l'artista:</label>
+        <input type="text" id="artist" name="artist" required>
+
+        <label for="audioFile">Arxiu de música (MP3):</label>
+        <input type="file" id="audioFile" name="audioFile" accept=".mp3" required>
+
+        <label for="coverFile">Arxiu de caràtula (Imatge):</label>
+        <input type="file" id="coverFile" name="coverFile" accept="image/*" required>
+
+        <label for="gameFile">Arxiu de joc (TXT) o crea'l manualment:</label>
+        <input type="file" id="gameFile" name="gameFile" accept=".txt">
+
+        <label for="gameText">Crea el joc aquí (textarea):</label>
+        <textarea id="gameText" name="gameText" rows="5"></textarea>
+
+        <input type="submit" value="Crear Cançó">
+    </form>
+
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+        </video> 
+        <div class="overlay"></div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="tornar-button" onclick="window.history.back()">Tornar</button>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const artist = document.getElementById('artist').value;
+            const audioFile = document.getElementById('audioFile').files[0];
+            const coverFile = document.getElementById('coverFile').files[0];
+            const gameFile = document.getElementById('gameFile').files[0];
+            const gameText = document.getElementById('gameText').value.trim();
+
+            if (!title || !artist || !audioFile || !coverFile) {
+                alert("Tots els camps són obligatoris!");
+                return false;
+            }
+
+            if (gameFile && gameText) {
+                alert("Només pots pujar un fitxer de joc o escriure el joc al textarea, no les dues coses.");
+                return false;
+            }
+
+            if (gameFile && gameFile.type !== "text/plain") {
+                alert("L'arxiu de joc ha de ser un fitxer TXT.");
+                return false;
+            }
+
+            if (gameText && !validateGameText(gameText)) {
+                alert("El format del joc al textarea no és correcte.");
+                return false;
+            }
+
+            document.getElementById('songForm').submit();
+        }
+
+        function validateGameText(gameText) {
+            const lines = gameText.split('\n');
+            for (let line of lines) {
+                const parts = line.split(',');
+                if (parts.length !== 2) {
+                    return false;
+                }
+
+                const instantInicial = parseFloat(parts[0].trim());
+                const instantFinal = parseFloat(parts[1].trim());
+
+                if (isNaN(instantInicial) || isNaN(instantFinal) || instantInicial < 0 || instantFinal < 0 || instantInicial >= instantFinal) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+</body>
+</html>

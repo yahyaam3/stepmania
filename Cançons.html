@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat de Cançons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #00e676;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        #song-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .song-item {
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .song-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .song-item h2 {
+            font-size: 1.5em;
+            color: #00e676;
+            margin-bottom: 10px;
+        }
+
+        .song-item p {
+            font-size: 1.2em;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .song-item audio {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .song-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        hr {
+            border: 0;
+            height: 2px;
+            background-color: #ff4081;
+            margin: 20px 0;
+            width: 80%;
+        }
+
+        @media (max-width: 768px) {
+            .song-item {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+
+        .tornar-button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .tornar-button:hover {
+            background-color: darkgreen;
+        }
+
+        .selected {
+            border: 3px solid #00e676;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 230, 118, 0.3);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .song-item.selected .overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Llistat de Cançons</h1>
+
+    <!-- Contenedor para mostrar la lista de canciones -->
+    <div id="song-list"></div>
+
+    <script>
+        // Función para cargar y mostrar las canciones
+        function loadSongs() {
+            fetch('cançons.json')  // Verifica que la ruta sea correcta
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar el archivo JSON');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const songList = document.getElementById('song-list');
+                    songList.innerHTML = ''; // Limpiar el contenedor
+
+                    if (data.length === 0) {
+                        songList.innerHTML = '<p>No hi ha cançons disponibles.</p>';
+                    } else {
+                        data.forEach((song, index) => {
+                            const songItem = document.createElement('div');
+                            songItem.classList.add('song-item');
+                            songItem.setAttribute('data-index', index);
+
+                            songItem.innerHTML = `
+                                <h2>${song.title}</h2>
+                                <p>Artista: ${song.artist}</p>
+                                <audio controls>
+                                    <source src="${song.audio}" type="audio/mp3">
+                                    El teu navegador no suporta el reproductor d'àudio.
+                                </audio>
+                                <img src="${song.cover}" alt="Caràtula de ${song.title}">
+                                <div class="overlay"></div>
+                            `;
+
+                            // Evento de clic para seleccionar la canción
+                            songItem.addEventListener('click', () => {
+                                seleccionarCancion(song);
+                                marcarSeleccion(songItem);
+                            });
+
+                            songList.appendChild(songItem);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar las canciones:', error);
+                    document.getElementById('song-list').innerHTML = '<p>Error al carregar les cançons.</p>';
+                });
+        }
+
+        // Función para manejar la selección de una canción
+        function seleccionarCancion(song) {
+            // Almacenar la información de la canción en localStorage
+            localStorage.setItem('cancionSeleccionada', JSON.stringify(song));
+            // Redirigir a la página del juego
+            window.location.href = 'stepmania.php';
+        }
+
+        // Función para marcar visualmente la canción seleccionada
+        function marcarSeleccion(songItem) {
+            // Eliminar la clase 'selected' de todos los elementos
+            const allSongs = document.querySelectorAll('.song-item');
+            allSongs.forEach(item => item.classList.remove('selected'));
+
+            // Añadir la clase 'selected' al elemento clicado
+            songItem.classList.add('selected');
+        }
+
+        // Llamar a la función para cargar las canciones cuando se carga la página
+        window.onload = loadSongs;
+    </script>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="tornar-button" onclick="window.history.back()">Tornar</button>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+[
+    {
+        "title": "PARANOIA",
+        "artist": "morad",
+        "audio": "uploads\/MORAD - PARANOIA FREESTYLE (VIDEO OFICIAL).mp3",
+        "cover": "uploads\/morad.png",
+        "gameFile": "uploads\/teclas1.txt"
+    },
+    {
+        "title": "BELDIA",
+        "artist": "skinny flex",
+        "audio": "uploads\/Skinny Flex -  BELDIA (Official Video).mp3",
+        "cover": "uploads\/51kwLHBXy1L._UXNaN_FMjpg_QL85_.jpg",
+        "gameFile": "uploads\/teclas1.txt"
+    },
+    {
+        "title": "FLOW2000",
+        "artist": "Beny jr, Bad Gyal",
+        "audio": "uploads\/noname.mp3",
+        "cover": "uploads\/images.jpg",
+        "gameFile": null
+    },
+    {
+        "title": "MOCROMAFIA",
+        "artist": "Baby Gang",
+        "audio": "uploads\/Baby Gang - Mocro Mafia Feat. Maes [Official Video].mp3",
+        "cover": "uploads\/artworks-zdHz9EOnIucjIRPe-xUWP6g-t500x500.jpg",
+        "gameFile": null
+    }
+]

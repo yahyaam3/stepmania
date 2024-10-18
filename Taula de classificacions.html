@@ -1,0 +1,177 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificació</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            background-color: rgba(34, 34, 34, 0.9);
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            color: #fff;
+        }
+
+        th {
+            background-color: #4CAF50;
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 1em;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(51, 51, 51, 0.9);
+        }
+
+        tr:hover {
+            background-color: rgba(68, 68, 68, 0.9);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="stepmania.php" class="home-icon" title="Ir a la página principal">
+        <img src="menu.png" alt="inici" style="position: fixed; top: 20px; left: 20px; width: 50px;">
+    </a>
+
+    <h1>Classificació</h1>
+
+    <table id="score-table">
+        <thead>
+            <tr>
+                <th>Nom del Jugador</th>
+                <th>Puntuació</th>
+                <th>Cançó</th>
+                <th>Data</th>
+                <th>Acció</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button class="back-button" onclick="window.location.href='stepmania.php'">Tornar</button>
+    </div>
+
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <script>
+        function cargarEstadisticas() {
+            const stats = JSON.parse(localStorage.getItem('gameStats')) || [];
+            const tableBody = document.querySelector('#score-table tbody');
+
+            if (stats.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No hi ha puntuacions disponibles</td></tr>';
+            } else {
+                stats.sort((a, b) => b.score - a.score);
+
+                stats.forEach((stat, index) => {
+                    const songTitle = stat.song !== "undefined" ? stat.song : "Desconeguda";
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stat.playerName}</td>
+                        <td>${stat.score}</td>
+                        <td>${songTitle}</td>
+                        <td>${stat.date}</td>
+                        <td><button onclick="eliminarPuntuacion(${index})">Eliminar</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        function eliminarPuntuacion(index) {
+            let stats = JSON.parse(localStorage.getItem('gameStats')) || [];
+            stats.splice(index, 1);
+            localStorage.setItem('gameStats', JSON.stringify(stats));
+            location.reload();
+        }
+
+        window.onload = cargarEstadisticas;
+    </script>
+
+</body>
+</html>
